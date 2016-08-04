@@ -1,0 +1,14 @@
+Package: vanillaBn
+Type: Package
+Title: A vanilla implementation of a boolean network modeling system.
+Version: 0.1
+Date: 2016-08-04
+Author: David L Gibbs
+Maintainer: David L Gibbs <dgibbs@systemsbiology.org>
+Description: An easily extensible vanilla version of a boolean network model
+    written in Rcpp.
+License: GPL (>= 2)
+SystemRequirements: C++11
+Imports: Rcpp (>= 0.12.6)
+LinkingTo: Rcpp
+NeedsCompilation: yes

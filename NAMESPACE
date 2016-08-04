@@ -1,0 +1,4 @@
+useDynLib(vanillaBn)
+exportPattern("^[[:alpha:]]+")
+importFrom(Rcpp, evalCpp)
+export(testRun)
