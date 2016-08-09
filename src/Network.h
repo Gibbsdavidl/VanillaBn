@@ -31,7 +31,7 @@ public:
     void load_list(std::vector<std::string>);
     void initState();
     void step();
-    void printState();
+    void printState(int);
 };
 
 

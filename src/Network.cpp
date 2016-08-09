@@ -29,7 +29,7 @@ void Network::run(int runs, int steps)
     for (int ri = 0; ri < runs; ++ri){
         initState();
         for (int si = 0; si < steps; ++si) {
-            printState();
+            printState(si);
             step();
         }
     }
@@ -95,9 +95,16 @@ void Network::initState()
 }
 
 
-void Network::printState()
+void Network::printState(int i)
 {
     stringstream state;
+
+    if (i == 0) {
+        for( map<string,Node*>::iterator it = nodeList.begin(); it != nodeList.end(); ++it )
+        {
+            state << it->second->getName() << "\t";
+        }
+    }
 
     for( map<string,Node*>::iterator it = nodeList.begin(); it != nodeList.end(); ++it )
     {

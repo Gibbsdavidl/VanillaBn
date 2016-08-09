@@ -14,14 +14,14 @@
 #import "BoolFun.h"
 
 class Node {
-    
+
 private:
     BoolFun bff;
     string  name;
     vector<string> inputs;
     int     val;
     int     next;
-    
+
 public:
     Node();
     Node(string n, string i, string s);
@@ -31,6 +31,7 @@ public:
     void compute(map<string,Node*> nodeList);
     int  getVal();
     void setVal(int);
+    string getName();
     void update();
 };
 

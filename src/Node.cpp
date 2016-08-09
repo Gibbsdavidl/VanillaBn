@@ -76,6 +76,11 @@ void Node::setVal(int x)
     val = x;
 }
 
+string Node::getName()
+{
+    return(name);
+}
+
 void Node::update()
 {
     val = next;

@@ -109,6 +109,14 @@ struct ATMSB {
 	void pdiv()   { T t(stk.pop()); t!=(T)0 ? stk.setTop(stk.top()/t) : stk.setTop(T((fltErr=1)-1)); }
 	void pchs()   { stk.setTop(-stk.top()); }
 
+    
+    // *************************************************************
+    // BOOLEAN FUNCTIONS !!
+    void pnot()   { stk.setTop(!stk.top()); }
+    void por()    { T t(stk.pop()); stk.setTop(t || stk.top()); }
+    void pand()   { T t(stk.pop()); stk.setTop(t && stk.top()); }
+    // *************************************************************
+    
 	#if !defined(COMPLEX) && !defined(MPFR)
 	void pabs()   { stk.setTop(std::abs(stk.top())); }
 	#else
@@ -370,12 +378,19 @@ void ATMSP<T>::expression(ATMSB<T> &bc) {
 	// Enter next recursion level
 	term(bc);
 
-	while ( *cp=='+' || *cp=='-' )
-		if ( *cp++ == '+' ) {
+	while ( *cp=='+' || *cp=='-' || *cp=='|')
+		if ( *cp == '+' ) {
+            *cp++;
 			term(bc);
 			bc.fun[opCnt++] = &ATMSB<T>::padd;
 		}
+        else if ( *cp == '|') {
+            *cp++;
+            term(bc);
+            bc.fun[opCnt++] = &ATMSB<T>::por;
+        }
 		else {
+            *cp++;
 			term(bc);
 			bc.fun[opCnt++] = &ATMSB<T>::psub;
 		}
@@ -388,12 +403,19 @@ void ATMSP<T>::term(ATMSB<T> &bc) {
 	// Enter next recursion level
 	factor(bc);
 
-	while ( *cp=='*' || *cp=='/' )
-		if ( *cp++ == '*' ) {
+	while ( *cp=='*' || *cp=='/' || *cp=='&')
+		if ( *cp == '*' ) {
+            *cp++;
 			factor(bc);
 			bc.fun[opCnt++] = &ATMSB<T>::pmul;
 		}
+        else if ( *cp == '&') {
+            *cp++;
+            term(bc);
+            bc.fun[opCnt++] = &ATMSB<T>::pand;
+        }
 		else {
+            *cp++;
 			factor(bc);
 			bc.fun[opCnt++] = &ATMSB<T>::pdiv;
 		}
@@ -418,6 +440,10 @@ void ATMSP<T>::factor(ATMSB<T> &bc) {
 		++cp; factor(bc);
 		bc.fun[opCnt++] = &ATMSB<T>::pchs;
 	}
+    else if ( *cp == '!') {
+        ++cp; factor(bc);
+        bc.fun[opCnt++] = &ATMSB<T>::pnot;
+    }
 
 	/// Extract numbers starting with digit or dot
 	else if ( isdigit(*cp) || *cp=='.' ) {
