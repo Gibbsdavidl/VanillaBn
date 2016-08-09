@@ -11,8 +11,8 @@ using namespace std;
 class BoolFun {
 
 private:
-    ATMSP<int> parser;
-    ATMSB<int> byteCode;
+    ATMSP<bool> parser;
+    ATMSB<bool> byteCode;
     string boolstr;
     string varstr;
     int    numvars;
