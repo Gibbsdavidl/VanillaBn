@@ -6,9 +6,12 @@
 using namespace Rcpp;
 
 // runNet
+// [[Rcpp::export]]
 List runNet(const StringVector& nodeData,
-            const NumericVector & runs,
-            const NumericVector & steps);
+    const NumericVector & runs,
+    const NumericVector & steps);
+
+
 RcppExport SEXP vanillaBn_runNet(SEXP nodeDataSEXP,
                                  SEXP runsSEXP,
                                  SEXP stepsSEXP) {

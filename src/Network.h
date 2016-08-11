@@ -14,6 +14,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <Rcpp.h>
 
 class Network {
 
@@ -26,11 +27,12 @@ private:
 public:
     Network();
     Network(std::string);
-    void run(int, int);
+    Rcpp::List run(int runs, int steps);
     void load_file(std::string filein);
     void load_list(std::vector<std::string>);
-    void initState();
-    void step();
+    string initState();
+    string step();
+    string stringState(int i);
     void printState(int);
 };
 

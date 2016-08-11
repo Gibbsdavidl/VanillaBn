@@ -11,6 +11,7 @@
 #include "Network.h"
 #include "Utils.h"
 #include <random>
+#include <Rcpp.h>
 
 Network::Network()
 {
@@ -24,21 +25,27 @@ Network::Network(std::string anetname)
 }
 
 
-void Network::run(int runs, int steps)
+Rcpp::List Network::run(int runs, int steps)
 {
+    Rcpp::List states(runs);
+    string curr = "x"; // current network state
+    string last = "y"; // network state at last step
     for (int ri = 0; ri < runs; ++ri){
-        initState();
+        vector<string> res0;  // this trajectory
+        res0.push_back(initState());
         for (int si = 0; si < steps; ++si) {
-            printState(si);
-            step();
+            curr = step();
+            res0.push_back(curr);
+            if (last == curr) {break;}
+            else {last = curr;}
         }
+        states[ri] = res0;
     }
-
-
+    return(states);
 }
 
 
-void Network::step()
+string Network::step()
 {
     // for each node
     //  compute and set next
@@ -53,6 +60,7 @@ void Network::step()
         it->second->update();
     }
 
+    return(stringState(0));
 }
 
 
@@ -81,7 +89,8 @@ void Network::load_list(std::vector<std::string> strings)
     }
 }
 
-void Network::initState()
+
+string Network::initState()
 {
     //http://stackoverflow.com/questions/13445688/how-to-generate-a-random-number-in-c
     std::mt19937 rng;
@@ -92,6 +101,21 @@ void Network::initState()
     {
         it->second->setVal(dist01(rng));
     }
+
+    return(stringState(0));
+}
+
+
+string Network::stringState(int i)
+{
+    string state;
+
+    for( map<string,Node*>::iterator it = nodeList.begin(); it != nodeList.end(); ++it )
+    {
+        state += std::to_string(it->second->getVal());
+    }
+
+    return(state);
 }
 
 
@@ -104,6 +128,7 @@ void Network::printState(int i)
         {
             state << it->second->getName() << "\t";
         }
+        state << "\n";
     }
 
     for( map<string,Node*>::iterator it = nodeList.begin(); it != nodeList.end(); ++it )
