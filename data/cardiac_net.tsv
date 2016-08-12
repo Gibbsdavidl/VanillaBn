@@ -1,0 +1,16 @@
+dummy; dummy; dummy
+BMP2; CanWNT,exogenBMP2II; (!CanWNT) & exogenBMP2II
+CanWNT; exogenCanWNTII; exogenCanWNTII
+DKK1; MESP1,CanWNT,exogenBMP2II; MESP1 | (CanWNT & (!exogenBMP2II))
+FGF8; MESP1,FOXC12,TBX1; MESP1 | FOXC12 | TBX1
+FOXC12; CanWNT,exogenCanWNTII; CanWNT_II & exogenCanWNTII
+GATAs; NKX25,MESP1,TBX5; NKX25 | MESP1 | TBX5
+ISL1; TBX1,MESP1,FGF8,CanWNT,exogenCanWNTII; TBX1 | MESP1 | FGF8 | (CanWNT & exogenCanWNTII)
+MESP1; CanWNT,exogenBMP2II; CanWNT * (!exogenBMP2II)
+NKX25; ISL1,GATAs,TBX1,MESP1,DKK1,BMP2,TBX5; (ISL1 & GATAs) | TBX1 | (MESP1 & DKK1) | (BMP2 & GATAs) | TBX5
+TBX1; FOXC12; FOXC12
+TBX5; TBX1,CanWNT,NKX25,TBX5,MESP1,DKK1; !(TBX1 | CanWNT) & (NKX25 | TBX5 | MESP1)  & !(DKK1 & !(MESP1 | TBX5))
+exogenBMP2I; dummy; 1
+exogenBMP2II; exogenBMP2I; exogenBMP2I
+exogenCanWNTI; exogenCanWNTI; exogenCanWNTI
+exogenCanWNTII; exogenCanWNTI; exogenCanWNTI

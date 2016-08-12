@@ -1,0 +1,8 @@
+Todo
+====
+
+* Finish the file to edgelist function
+
+* Add a plot edgelist function, use igraph
+
+* Add a plot state trajectories function
