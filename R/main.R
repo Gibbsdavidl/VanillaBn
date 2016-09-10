@@ -25,5 +25,5 @@ listToEdgeList <- function(res0) {
 plotEdgeList <- function(es) {
     require(igraph)
     g <- graph.edgelist(as.matrix(es))
-    plot(g, vertex.size=05, vertex.label.cex=0.2)
+    plot(g, vertex.size=0.8, edge.arrow.size=0.8, vertex.label.cex=0.2, vertex.label =NA)
 }
